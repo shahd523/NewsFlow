@@ -2,10 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:newsapp/Core/AppStyle.dart';
 import 'package:newsapp/UI/Home/Screen/HomeScreen.dart';
+import 'package:newsapp/providers/ThemeProvider.dart';
+import 'package:provider/provider.dart';
 
 void main()async {
   await ScreenUtil.ensureScreenSize();
-  runApp(const MyApp());
+  runApp(ChangeNotifierProvider(create: (context)=>ThemeProvider(),
+  child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -14,6 +17,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    ThemeProvider provider=Provider.of<ThemeProvider>(context);
     return ScreenUtilInit(
       designSize: const Size(393,852),
       minTextAdapt: true,
@@ -22,7 +26,8 @@ class MyApp extends StatelessWidget {
         return MaterialApp(
         title: 'Flutter Demo',
         theme:AppStyle.lightTheme,
-        themeMode: ThemeMode.light,
+        darkTheme: AppStyle.DarkTheme,
+        themeMode:provider.currenttheme,
 
 
         home: const MyHomePage(title: 'Flutter Demo Home Page'),

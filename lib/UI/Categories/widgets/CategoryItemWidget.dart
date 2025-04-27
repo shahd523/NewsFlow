@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:newsapp/Core/AssetsManager.dart';
 import 'package:newsapp/Core/StringsManager.dart';
 import 'package:newsapp/Models/CategoryModel.dart';
 

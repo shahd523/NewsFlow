@@ -3,6 +3,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:newsapp/Core/AssetsManager.dart';
 import 'package:newsapp/Core/StringsManager.dart';
+import 'package:newsapp/providers/ThemeProvider.dart';
+import 'package:provider/provider.dart';
 
 class HomeDrawer extends StatefulWidget{
   final void Function() backhome;
@@ -12,12 +14,13 @@ class HomeDrawer extends StatefulWidget{
 }
 
 class _HomeDrawerState extends State<HomeDrawer> {
-  String selectedval="light";
+  //String selectedval="light";
   String selectedlang="en";
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
+    ThemeProvider provider=Provider.of<ThemeProvider>(context);
+    String selectedval = provider.currenttheme == ThemeMode.light ? 'light' : 'dark';
     return Drawer(
       backgroundColor: Theme.of(context).colorScheme.secondary,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.zero),
@@ -77,17 +80,27 @@ class _HomeDrawerState extends State<HomeDrawer> {
                     style: Theme.of(context).textTheme.titleSmall,
                     items:[DropdownMenuItem(
                   value:"light" ,
-                    child: Text(StringsManager.light)),
+
+                        child: Text(StringsManager.light)),
                   DropdownMenuItem(
                     value: "dark",
-                      child: Text(StringsManager.dark))] ,
-                    onChanged:(value){
+                      child: Text(StringsManager.dark))],
+                  onChanged: ( value) {
+                    if(value!=null){
+                      setState(() {
+                        selectedval=value;
+                        if(selectedval=="light"){
+                          provider.changeTheme(ThemeMode.light);
+                        }
+                        else{
+                          provider.changeTheme(ThemeMode.dark);
+                        }
+                      });
+                      }
+                  } ,
 
-                    setState(() {
-                      selectedval=value!;
-                    });
 
-                    }),
+                    ),
               ),
               SizedBox(height: 24.h,),
               Divider(color: Colors.white,),

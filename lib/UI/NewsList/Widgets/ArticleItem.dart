@@ -1,9 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:newsapp/UI/articles%20responce/articles.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 class ArticleItem extends StatelessWidget{
+  final Articles article;
+  ArticleItem(this.article);
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -24,13 +27,12 @@ class ArticleItem extends StatelessWidget{
               children: [
                 ClipRRect(
                     borderRadius: BorderRadius.circular(8.r),
-                    child: CachedNetworkImage(imageUrl: "https://play-lh.googleusercontent.com/zQIXMNP87brRkMSRRiALQkgF-JRQeBW5vMgqwUt3xMwKw3yeZeZyH1GU6lzXNbDBuRM=w240-h480-rw"
+                    child: CachedNetworkImage(imageUrl:article.urlToImage??""
                       ,height: 220.h,fit: BoxFit.cover,width: double.infinity,
                       placeholder: (context,url)=>Center(child: CircularProgressIndicator()),
                       errorWidget: (context,url,error)=>Icon(Icons.error,size: 40.sp,),)),
                 SizedBox(height: 8.h,),
-                Text("A 40-year-old man has fallen approximately 200 feet to his death while canyoneering with three others at Zion National Park in Utah, authorities confirmed.\r\nThe incident occurred on Saturday when the…"
-                ,style: Theme.of(context).textTheme.titleSmall?.copyWith(fontSize: 14.sp),maxLines: 4,
+                Text(article.description??"",style: Theme.of(context).textTheme.titleSmall?.copyWith(fontSize: 14.sp),maxLines: 4,
                 overflow: TextOverflow.ellipsis,),
                 SizedBox(height: 8.h,),
                 ElevatedButton(onPressed: (){},
@@ -56,14 +58,14 @@ class ArticleItem extends StatelessWidget{
         child: Column(children: [
           ClipRRect(
             borderRadius: BorderRadius.circular(8.r),
-              child: CachedNetworkImage(imageUrl: "https://play-lh.googleusercontent.com/zQIXMNP87brRkMSRRiALQkgF-JRQeBW5vMgqwUt3xMwKw3yeZeZyH1GU6lzXNbDBuRM=w240-h480-rw"
+              child: CachedNetworkImage(imageUrl: article.urlToImage??""
                 ,height: 220.h,fit: BoxFit.cover,width: double.infinity,
                 placeholder: (context,url)=>Center(child: CircularProgressIndicator()),
                 errorWidget: (context,url,error)=>Icon(Icons.error,size: 40.sp,),)),
           SizedBox(height: 10.h,),
           Column(
             children: [
-              Text("40-year-old man falls 200 feet to his death while canyoneering at national park",
+              Text(article.title??"",
               style: Theme.of(context).textTheme.titleMedium?.copyWith(fontSize: 16.sp),
               maxLines: 2,
               overflow: TextOverflow.ellipsis,),
@@ -71,10 +73,13 @@ class ArticleItem extends StatelessWidget{
               Row(
                 children: [
                  Expanded(flex: 3,
-                     child: Text("By : Jon Haworth",style: Theme.of(context).textTheme.titleSmall?.copyWith(color: Colors.grey),)
+                     child: Text("By : ${article.author}",style: Theme.of(context).textTheme.titleSmall?.copyWith(color: Colors.grey),)
                  ),
                   Expanded(flex: 1,
-                      child: Text(timeago.format(DateTime.now().subtract(Duration(minutes: 20))),textAlign: TextAlign.end,style: Theme.of(context).textTheme.titleSmall?.copyWith(color: Colors.grey),))
+                      child: Text(DateTime.now().difference(DateTime.parse(article.publishedAt??"")).inDays<2?
+                        timeago.format(DateTime.parse(article.publishedAt??"")):
+                          article.publishedAt??""
+                        ,textAlign: TextAlign.end,style: Theme.of(context).textTheme.titleSmall?.copyWith(color: Colors.grey),))
                 ],
               )
             ],

@@ -17,6 +17,8 @@ abstract class StringsManager{
   static const String lange="Language";
   static const String en="English";
   static const String ar="العربيه";
+  static const String baseurl="newsapi.org";
+  static const String apikey="63068872ed8340e19b936d90b1ba7952";
   static const String goodmorning='''Good Morning,
  Here is Some News For You''';
 }

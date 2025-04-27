@@ -33,7 +33,7 @@ class _HomeScreenState extends State<HomeScreen> {
         title: Text(selectedcategory!=null?selectedcategory!.title: StringsManager.home),
         actions: [IconButton(onPressed: (){}, icon:Icon( Icons.search,color: Colors.black))],
       ),
-      body:isshow?NewsList()
+      body:isshow?NewsList(selectedcategory!)
           :Categories(oncategoryselected),
     );
   }
