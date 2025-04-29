@@ -13,13 +13,16 @@ class NewsListViewModel extends ChangeNotifier{
   if(responce?.status=="error"){
     //error state
      errormsg=responce?.message;
+    showloading=false;
 
   }
   else{
     //success state
     sources=responce?.sources??[];
+    showloading=false;
   }}catch(e){
       errormsg=e.toString();
+      showloading=false;
     }
     notifyListeners();
 
