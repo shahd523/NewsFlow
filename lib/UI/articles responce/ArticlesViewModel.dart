@@ -13,6 +13,7 @@ class ArticlesViewModel extends ChangeNotifier{
       if (responce.status == "error") {
         //handle error server
         errormsg=responce.message;
+      
 
       }
       else{
@@ -27,6 +28,7 @@ class ArticlesViewModel extends ChangeNotifier{
       errormsg=e.toString();
       showloading=false;
     }
+     notifyListeners();
   }
  }
 
